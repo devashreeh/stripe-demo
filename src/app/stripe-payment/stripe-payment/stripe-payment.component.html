@@ -1,1 +1,108 @@
-<p>stripe-payment works!</p>
+<div class="p-20" *ngIf="fromPayment != 'connect'">
+    <div class="modal-body">
+        <h4>Checkout</h4>
+        <div class="payment-form-div col-12">
+            <form [formGroup]="customerForm">
+                <div class="row">
+                    <div class="form-group col-12">
+                        <label class="profile-form-lable  required-field">Name</label>
+                        <input type="text" class="form-control mt-10" placeholder="e.g. John Doe" formControlName="name"
+                            [class.is-invalid]="customerForm.get('name').dirty && customerForm.get('name').invalid"
+                            required>
+
+                        <small class="text-danger"
+                            *ngIf="customerForm.get('name').dirty && customerForm.get('name').invalid">
+                            Please enter name</small>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="form-group col-12 mt-15">
+                        <label class="profile-form-lable  required-field">Email</label>
+                        <input type="email" class="form-control mt-10" placeholder="johndoe@gmail.com"
+                            formControlName="email" required>
+
+                        <small class="text-danger"
+                            *ngIf="customerForm.get('email').dirty && customerForm.get('email').invalid">
+                            Please enter valid email address</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-12 search-drop-down1 mt-15">
+                        <label for="country" class="brand-label required-field">Country</label>
+                        <div class="mt-10">
+                            <select id="countries" name="country" formControlName="country">
+                                <option *ngFor="let country of countryList" [value]="country.code">
+                                    {{country.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="fromPayment == 'onetime'">
+                    <div class="form-group col-12 search-drop-down1 mt-15">
+                        <label for="country" class="brand-label required-field">Amount</label>
+                        <div class="mt-10">
+                            <input type="text" class="form-control mt-10" placeholder="$100"
+                            formControlName="amount">
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="stripe-div mt-15">
+                <form action="/charge" method="post" id="payment-form" #paymentForm>
+                    <div class="row payment-card-div">
+
+                        <label for="card-element" class="stripe-form-label required-field">
+                            Credit or debit card
+                        </label>
+
+                        <div id="card-element"></div>
+
+                        <small id="card-errors" class="text-danger px-4 px-md-5 nopadding ml-10" role="alert"></small>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="action-buttons mt-10">
+            <div class="form-group">
+                <button class="primary-btn mt-20 sec-button-text" (click)="modal.close()">
+                    Cancel
+                </button>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="primary-btn mt-20 ml-20" id="payment-request-button" (click)="payNow()" [disabled]="customerForm.invalid || waiting">
+                    <span *ngIf="!waiting">Pay</span>
+                    <div *ngIf="waiting" class="spinner-border init-spinner-border" role="status">
+                        <span class="sr-only"></span>
+                     </div>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="p-20" *ngIf="fromPayment == 'connect'">
+    <div class="modal-body">
+        <div class="setup-account" *ngIf="step1">
+            <h6>Setup your connected account </h6>
+            <button class="pay-option-btn mt-10" (click)="createAccount()">
+                <span *ngIf="!waiting">Create Account</span>
+                <div *ngIf="waiting" class="spinner-border init-spinner-border" role="status">
+                    <span class="sr-only"></span>
+                </div>
+            </button>
+        </div>
+        <div class="setup-account" *ngIf="step2">
+            <h6>Generate link to complete the setup</h6>
+            <button class="pay-option-btn" (click)="generateLink()">
+                <span *ngIf="!waiting">Generate Link</span>
+                <div *ngIf="waiting" class="spinner-border init-spinner-border" role="status">
+                    <span class="sr-only"></span>
+                </div>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+.subscription-plans{
+    min-height: 100px;
+    .plans-div {
+        padding:30px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        text-align: center;
+    }
+    .plans {
+        background: aliceblue;
+        padding: 20px;
+        border-radius: 2px;
+        margin-left: 10px;
+        width: 400px;
+        height: 60vh;
+    }
+    .plan-title{
+        font-weight: bold;
+        height: 65px;
+    }
+    .mt-20{
+        margin-top: 30px;
+    }
+    .buyNow{
+        height: 80px;
+    }
+    .buyNowBtn{
+        height: 45px;
+        color: rgb(48, 46, 46);
+        background-color: #1479e845;
+        font-weight: 600;
+        font-size: 16px;
+        border: none;
+        width: 150px;
+        border-radius: 4px;
+        &:focus{
+            outline: none;
+        }
+    }
+    .h-65{
+        height: 130px;
+    }
+    .close-btn {
+        float: right;
+        margin-right: 10px;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+}

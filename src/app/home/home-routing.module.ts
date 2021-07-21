@@ -16,6 +16,11 @@ const routes: Routes =[
         data: {
           name: 'home'
         },
+      },
+      {
+        path: '',
+        redirectTo: 'stripe-demo',
+        pathMatch: 'full'
       }
     ]
   }

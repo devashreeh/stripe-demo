@@ -1,0 +1,82 @@
+.mt-15{
+    margin-top:15px;
+}
+.mt-10{
+    margin-top: 10px;
+}
+.p-20{
+    padding:10px
+}
+.action-buttons {
+    display: flex;
+    flex-direction: row;
+}
+.ml-20{
+    margin-left: 20px;
+}
+.ml-10{
+    margin-left: 10px;
+}
+.primary-btn{
+    border:none;
+    height: 40px;
+    width: 100px;
+    border-radius: 5px;
+    &:focus{
+        border:none;
+        outline: none;
+    }
+}
+#payment-request-button{
+    background-color: #1976d2;
+    color:#fff;
+}
+#card-element {
+    border: 1px solid #ddd;
+    padding: 9px;
+    border-radius: 4px;
+    margin-left: 12px;
+    width: 95%;
+    margin-top: 10px;
+}
+select{
+    border: 1px solid #ddd;
+    background: none;
+    padding: 9px;
+    color: #212529;
+    width: 100%;
+    border-radius: 4px;
+    &:focus{
+        outline: none;
+    }
+}
+.subscription-plans{
+    margin-top: 10px;
+}
+.stripe-plans-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top:10px;
+}
+
+.pay-option-btn {
+    height: 50px;
+    color: rgb(48, 46, 46);
+    background-color: #1479e845;
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+    width: 200px;
+    border-radius: 4px;
+    &:focus{
+        outline: none;
+    }
+}
+.setup-account{
+    text-align: center;
+}
+ .init-spinner-border{
+    width: 1.5rem;
+    height: 1.5rem;
+  }
