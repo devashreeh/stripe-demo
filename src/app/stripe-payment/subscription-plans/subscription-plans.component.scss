@@ -1,5 +1,6 @@
 .subscription-plans{
     min-height: 100px;
+    margin-top: 65px;
     .plans-div {
         padding:30px;
         display: flex;
@@ -19,6 +20,11 @@
     .plan-title{
         font-weight: bold;
         height: 65px;
+        font-size: 24px;
+    }
+    .small-text{
+        font-size: 16px;
+        font-weight: 300;
     }
     .mt-20{
         margin-top: 30px;
@@ -47,5 +53,11 @@
         margin-right: 10px;
         margin-top: 10px;
         cursor: pointer;
+    }
+    .subscription-title{
+        font-size: 26px;
+        font-weight: bold;
+        text-align: center;
+        color: #324963d8;
     }
 }

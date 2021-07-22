@@ -29,6 +29,8 @@ export class StripePaymentComponent implements OnInit {
   public accountId : any;
   public waiting = false;
   public priceId : any;
+  public planName : any;
+  public paymentSuccess = false;
 
   constructor(
     public modal: NgbActiveModal,
@@ -45,17 +47,7 @@ export class StripePaymentComponent implements OnInit {
       amount :[""] 
     });
     this.customerForm.patchValue({
-      country : "US",
-      email : localStorage.getItem("emailId") ? localStorage.getItem("emailId") : null
-    });
-    console.log("fromPayment",this.fromPayment);
-  }
-
- 
-
-  createConnectedAccount(){
-    this.stripeService.createConnectedAccount().subscribe((resp)=>{
-      console.log("connected",resp);
+      country : "US"
     });
   }
 
@@ -160,12 +152,10 @@ export class StripePaymentComponent implements OnInit {
       token: token
     };
     this.stripeService.createCustomer(obj).subscribe((res: any) => {
-      console.log(res);
       if(res.status_code == 200){
         let stripe_customer_id = res.data.customer;
-        // let stripe_customer_id = "cus_JrUo5qQU0zQi5J";
-        localStorage.setItem("customerId",stripe_customer_id);
-        localStorage.setItem("emailId",this.customerForm.value.email);
+        sessionStorage.setItem("customerId",stripe_customer_id);
+        sessionStorage.setItem("emailId",this.customerForm.value.email);
         if(this.fromPayment == "onetime"){
           this.makePayment(stripe_customer_id);
         }else{
@@ -178,16 +168,12 @@ export class StripePaymentComponent implements OnInit {
   makePayment(stripe_customer_id: any){
     let obj = {
       "customer_id":stripe_customer_id,
-      "amount": this.customerForm.value.amount * 10
+      "amount": this.customerForm.value.amount * 100
     }
     this.stripeService.makePayment(obj).subscribe((resp:any)=>{
-      console.log(resp);
       if(resp.status_code == 200){
-        this.modal.close();
         this.waiting = false;
-        // this.toastr.success(
-        //   "Payment Completed Successfully!"
-        // );
+        this.paymentSuccess = true;
       }
     },(err)=>{
       console.log(err);
@@ -200,7 +186,6 @@ export class StripePaymentComponent implements OnInit {
       "customer_id": stripe_customer_id
     }
     this.stripeService.attachCard(data).subscribe((resp:any)=>{
-      console.log(resp);
       if(resp.status_code == 200){
         this.makePayment(stripe_customer_id);
       }
@@ -218,12 +203,9 @@ export class StripePaymentComponent implements OnInit {
       "customer_id":stripe_customer_id
     }
     this.stripeService.createSubscription(obj).subscribe((resp:any)=>{
-      console.log(resp);
       if(resp.status_code == 200){
-        this.modal.close();
-        // this.toastr.success(
-        //   "Subscription Created Successfully!"
-        // );
+        this.paymentSuccess = true;
+        localStorage.setItem("plan",this.planName);
       } 
     },(err)=>{
       console.log(err);
@@ -251,7 +233,6 @@ export class StripePaymentComponent implements OnInit {
       "url":"http://localhost:4200/"
     }
     this.stripeService.generateLink(obj).subscribe((resp:any)=>{
-      console.log(resp);
       if(resp.status_code == 200)
       {
         this.modal.close();
@@ -259,6 +240,10 @@ export class StripePaymentComponent implements OnInit {
         window.open(resp.data.url,"_blank");
       }
     })
+  }
+
+  close(){
+    this.modal.close();
   }
 
 }

@@ -1,23 +1,24 @@
 <div class="toolbar" role="banner">
-  <img
-    width="40"
-    alt="Logo"
-    src="assets/images.jpeg"
-  />
-  <span class="title">Learning Saturday</span>
-    <div class="spacer"></div>
+  <div class="text-left">
+    <img width="40" alt="Logo" src="assets/images.jpeg" />
+    <span class="title">Learning Saturday</span>
   </div>
+ 
+  <div class="spacer"></div>
+  <div class="plan-activated" *ngIf="planName">Current Plan: {{planName}}</div>
+</div>
 
 <div class="content" role="main">
+ 
   <div class="">
-    <img src="assets/stripe.png" class="stripe-image"/>
+    <img src="assets/stripe.png" class="stripe-image" />
   </div>
   <div class="">
-    <img src="assets/card-icon-8.jpg" class="stripe-image"/>
+    <img src="assets/card-icon-8.jpg" class="stripe-image" />
   </div>
   <div class="stripe-payment-options">
     <button class="pay-option-btn" (click)="oneTimePayment('onetime')">One Time Payment</button>
     <button class="pay-option-btn" (click)="subscriptionPlans()">Subscription</button>
     <button class="pay-option-btn" (click)="oneTimePayment('connect')">Stripe Connect</button>
   </div>
-</div>  
+</div>

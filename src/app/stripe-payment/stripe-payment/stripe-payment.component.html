@@ -1,4 +1,4 @@
-<div class="p-20" *ngIf="fromPayment != 'connect'">
+<div class="p-20" *ngIf="fromPayment != 'connect' && !paymentSuccess">
     <div class="modal-body">
         <h4>Checkout</h4>
         <div class="payment-form-div col-12">
@@ -84,25 +84,39 @@
     </div>
 </div>
 
-<div class="p-20" *ngIf="fromPayment == 'connect'">
+<div class="p-20 connectedAccount" *ngIf="fromPayment == 'connect' && !paymentSuccess">
     <div class="modal-body">
-        <div class="setup-account" *ngIf="step1">
-            <h6>Setup your connected account </h6>
-            <button class="pay-option-btn mt-10" (click)="createAccount()">
-                <span *ngIf="!waiting">Create Account</span>
-                <div *ngIf="waiting" class="spinner-border init-spinner-border" role="status">
-                    <span class="sr-only"></span>
-                </div>
-            </button>
+       <div class="setup-account" >
+            <div *ngIf="step1">
+                <h6>Setup your connected account </h6>
+                <button class="pay-option-btn mt-10" (click)="createAccount()">
+                    <span *ngIf="!waiting">Create Account</span>
+                    <div *ngIf="waiting" class="spinner-border init-spinner-border" role="status">
+                        <span class="sr-only"></span>
+                    </div>
+                </button>
+            
+            </div>
+            <div *ngIf="step2">
+                <h6>Generate link to complete the setup</h6>
+                <button class="pay-option-btn" (click)="generateLink()">
+                    <span *ngIf="!waiting">Generate Link</span>
+                    <div *ngIf="waiting" class="spinner-border init-spinner-border" role="status">
+                        <span class="sr-only"></span>
+                    </div>
+                </button>
+            </div>
+            <div class="mt-10" (click)="close()">
+                <span class="cancel">Cancel</span>
+            </div>
         </div>
-        <div class="setup-account" *ngIf="step2">
-            <h6>Generate link to complete the setup</h6>
-            <button class="pay-option-btn" (click)="generateLink()">
-                <span *ngIf="!waiting">Generate Link</span>
-                <div *ngIf="waiting" class="spinner-border init-spinner-border" role="status">
-                    <span class="sr-only"></span>
-                </div>
-            </button>
-        </div>
+    </div>
+</div>
+
+<div class="p-20" *ngIf="paymentSuccess">
+    <img class="close-btn" src="assets/close_dark.svg" (click)="close()"/>
+    <div class="paymentSuccessMsg">
+        <img src="assets/checkboxSelected.svg" class="sucessfullpayment">
+        <span class="title">Your transaction is completed successfully!</span>
     </div>
 </div>

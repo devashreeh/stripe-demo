@@ -7,6 +7,10 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
   },
   {
+    path: 'plans',
+    loadChildren: () => import('./stripe-payment/stripe-payment.module').then(m => m.StripePaymentModule)
+  },
+  {
     path: '**',
     redirectTo: 'home'
   }

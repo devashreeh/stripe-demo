@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { StripeService } from 'src/app/services/stripe.service';
 import { StripePaymentComponent } from '../stripe-payment/stripe-payment.component';
 
@@ -14,8 +14,7 @@ export class SubscriptionPlansComponent implements OnInit {
 
   constructor(
     private stripeService : StripeService,
-    public modal: NgbActiveModal,
-    private modalService: NgbModal
+    private modalService : NgbModal
   ) { }
 
   ngOnInit(): void {
@@ -25,21 +24,18 @@ export class SubscriptionPlansComponent implements OnInit {
   getStripePlans(){
     this.stripeService.getSubscriptionPlans().subscribe((resp:any)=>{
       if(resp.status_code == 200){
-        this.stripePlans = resp.data.data;
+        this.stripePlans = resp.data;
+        this.stripePlans = this.stripePlans.reverse();
       }
     });
   }
 
-  close(){
-    this.modal.close();
-  }
-
-  proceedPayment(){
-    this.modal.close();
+  proceedPayment(priceId : string,name: string){
     const modalRef = this.modalService.open(StripePaymentComponent, { centered: true, keyboard: false, windowClass: 'custom-class', size: 'md' ,  backdrop : 'static'});
     modalRef.componentInstance.type = 'test mode';
     modalRef.componentInstance.fromPayment  = 'subscription';
-    modalRef.componentInstance.priceId = 'price_1JD6w5SIFEgGtsdxnj15jLq2';
+    modalRef.componentInstance.priceId = priceId;
+    modalRef.componentInstance.planName = name;
     modalRef.result.then((result:any) => {
     }, (reason:any) => {
       console.log(reason);
