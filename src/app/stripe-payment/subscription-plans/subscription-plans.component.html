@@ -7,7 +7,7 @@
                     {{plan.product.name}}
                 </h5>
                 <span class="plan-title">
-                    ${{plan.unit_amount / 100}}<span class="small-text">/{{plan.recurring.interval}}</span>
+                    ₹{{plan.unit_amount / 100}}<span class="small-text">/<span *ngIf="plan.recurring.interval_count > 1">{{plan.recurring.interval_count}} </span>{{plan.recurring.interval}}</span>
                 </span>
                
                 <div class="h-65 mt-20">
